@@ -2,7 +2,7 @@ package game;
 
 public class Hand {
 	//private static Deck deck;
-	private static int numberAt;
+	private int numberAt;
 	
 	public Hand(Deck d) {
 		//deck = new Deck();
@@ -14,6 +14,15 @@ public class Hand {
 		return temp;
 	}
 	
+	public String statusOfHand() {
+		if(getNumberAt() == 21) {
+			return "BLACKJACK!";
+		}
+		if(getNumberAt() > 21) {
+			return "BUST!";
+		}
+		return Integer.toString(numberAt);
+	}
 	public int getNumberAt() {
 		return numberAt;
 	}

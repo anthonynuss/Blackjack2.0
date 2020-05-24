@@ -52,5 +52,14 @@ public class Card {
 	  {
 	    return suit;
 	  }
+	  
+	  public String cardToImage() {
+		  if(getSuit().toString().equals("HEARTS")) {
+			  if(getRank() == 13) {
+				  return "..//BlackJack2.0//resources//JPEG//KD.jpg";
+			  }
+		  }
+		  return Integer.toString(rank);
+	  }
 
 }
