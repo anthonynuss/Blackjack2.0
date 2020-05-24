@@ -2,12 +2,16 @@ package game;
 
 import java.util.Random;
 
+/**
+ * Represents a card
+ * @author tonynuss
+ *
+ */
 public class Card {
 	 /**
 	   * Constants for the four suits.
 	   */
-	  public enum Suit
-	  {
+	  public enum Suit {
 	    CLUBS, DIAMONDS, HEARTS, SPADES
 	  };
 
@@ -21,13 +25,20 @@ public class Card {
 	   */
 	  private final int rank;
 	
-	  public Card(int givenRank, Suit givenSuit)
-	  {
+	  /**
+	   * constructs a card
+	   * @param givenRank
+	   * @param givenSuit
+	   */
+	  public Card(int givenRank, Suit givenSuit) {
 	    rank = givenRank;
 	    suit = givenSuit;
 	  }
 	  
-	  
+	  /**
+	   * returns random rank
+	   * @return random rank
+	   */
 	  public int getRandRank() {
 		  Random rand = new Random();
 		  return rand.nextInt(10)+1;
@@ -38,8 +49,7 @@ public class Card {
 	   * 
 	   * @return rank for this card
 	   */
-	  public int getRank()
-	  {
+	  public int getRank() {
 	    return rank;
 	  }
 
@@ -48,12 +58,16 @@ public class Card {
 	   * 
 	   * @return suit for this card
 	   */
-	  public Suit getSuit()
-	  {
+	  public Suit getSuit() {
 	    return suit;
 	  }
 	  
+	  /**
+	   * turns the card rank/suit to an image of the actual card.
+	   * @return
+	   */
 	  public String cardToImage() {
+		  //Heart suit cards
 		  if(getSuit().toString().equals("HEARTS")) {
 			  if(getRank()==1)
 				  return "..//BlackJack2.0//resources//JPEG//AH.jpg";
@@ -82,6 +96,8 @@ public class Card {
 			  if(getRank()==13) 
 				  return "..//BlackJack2.0//resources//JPEG//KH.jpg";  
 		  }
+		  
+		  //Diamond suit cards
 		  else if(getSuit().toString().equals("DIAMONDS")) {
 			  if(getRank()==1)
 				  return "..//BlackJack2.0//resources//JPEG//AD.jpg";
@@ -110,6 +126,8 @@ public class Card {
 			  if(getRank()==13) 
 				  return "..//BlackJack2.0//resources//JPEG//KD.jpg"; 
 		  }
+		  
+		  //Club suit cards
 		  else if(getSuit().toString().equals("CLUBS")) {
 			  if(getRank()==1)
 				  return "..//BlackJack2.0//resources//JPEG//AC.jpg";
@@ -138,6 +156,8 @@ public class Card {
 			  if(getRank()==13) 
 				  return "..//BlackJack2.0//resources//JPEG//KC.jpg"; 
 		  }
+		  
+		  //Spade suit cards
 		  else if(getSuit().toString().equals("SPADES")) {
 			  if(getRank()==1)
 				  return "..//BlackJack2.0//resources//JPEG//AS.jpg";
@@ -166,6 +186,7 @@ public class Card {
 			  if(getRank()==13) 
 				  return "..//BlackJack2.0//resources//JPEG//KS.jpg"; 
 		  }
+		  
 		  return Integer.toString(rank);
 	  }
 
