@@ -1,11 +1,15 @@
 package game;
 
+import java.util.ArrayList;
+
 /**
  * Represents a hand in blackjack
  * @author tonynuss
  *
  */
 public class Hand {
+	ArrayList<Card> hand = new ArrayList<Card>();
+	private int numOfAces;
 	/**
 	 * The number the hand is at
 	 */
@@ -32,6 +36,7 @@ public class Hand {
 	 */
 	public Card getRandCard(Deck d) {
 		Card temp = d.select();
+		hand.add(temp);
 		numberOfCards++;
 		//case for face cards
 		if(temp.getRank()==11 || temp.getRank()==12 || temp.getRank()==13) {
@@ -40,12 +45,22 @@ public class Hand {
 		//case for ace
 		else if(temp.getRank()==1 && numberAt + 11 <= 21) {
 			numberAt += 11;
+			numOfAces++;
 		}else {
 			numberAt += temp.getRank();
 		}
 		return temp;
 	}
 	
+//	public int numOfAces() {
+//		int num = 0;
+//		for(int i = 0; i < hand.size(); i++) {
+//			if(hand.get(i).getRank()==1) {
+//				num++;
+//			}
+//		}
+//		return num;
+//	}
 	/**
 	 * The status of the hand. Either blackjack, bust, or the number it is at.
 	 * @return the status
@@ -53,6 +68,15 @@ public class Hand {
 	public String statusOfHand() {
 		if(getNumberAt() == 21 && numberOfCards == 2) {
 			return "BLACKJACK!";
+		}
+		
+		while(getNumberAt() > 21 && numOfAces != 0) {
+			numberAt -= 10;
+			numOfAces--;
+		}
+		
+		if(numOfAces != 0) {
+			return Integer.toString(numberAt) +" or " +Integer.toString(numberAt -(10*numOfAces));
 		}
 		if(getNumberAt() > 21) {
 			return "BUST!";
