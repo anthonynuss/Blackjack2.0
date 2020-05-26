@@ -25,12 +25,14 @@ public class Display implements ActionListener {
 	private JButton dealerCard2;
 	private JButton deal;
 	private JButton hit;
+	private JButton doubleDown;
 	private JButton stand;
 	private JButton newGame;
 
+	private Chips chips;
 	private int cardLocation;
 	private int dealerCardLocation;
-
+	
 	private JLabel numAt;
 	private JLabel dealerNumAt;
 	private JLabel background;
@@ -41,8 +43,10 @@ public class Display implements ActionListener {
 	 * @param d a deck
 	 * @param f a frame
 	 */
-	public Display(Deck d, JFrame f) {
+	public Display(Deck d, JFrame f, Chips c) {
 		this.deck = d;
+		this.chips = c;
+		
 		frame = f;
         background = null;
         
@@ -83,9 +87,15 @@ public class Display implements ActionListener {
 		hit.addActionListener(this);
 		background.add(hit);
 		
+		//adds Double button
+		doubleDown = new JButton("Double");
+		doubleDown.setBounds(450, 520, 70, 20);
+		doubleDown.addActionListener(this);
+		background.add(doubleDown);
+		
 		//adds stand button
 		stand = new JButton("Stand");
-		stand.setBounds(450, 520, 70, 20);
+		stand.setBounds(450, 540, 70, 20);
 		stand.addActionListener(this);
 		background.add(stand);
 		
@@ -160,6 +170,11 @@ public class Display implements ActionListener {
 		background.repaint();
 	}
 	
+	public void doubleDown() {
+		hit();
+		dealerTurn();
+	}
+	
 	/**
 	 * does the dealers turn. In blackjack the dealer must hit until their number is at least 17. 
 	 * They also have to stand at 17 or higher. The dealers 2nd card isn't shown until the player is done.
@@ -168,6 +183,7 @@ public class Display implements ActionListener {
 		//remove player options
 		background.remove(hit);
 		background.remove(stand);
+		background.remove(doubleDown);
 		
 		//change dealers 2nd card to a actual card
 		dealerCard2.setIcon(new ImageIcon(dCard2.cardToImage()));
@@ -237,7 +253,7 @@ public class Display implements ActionListener {
 		background.removeAll();
 		
 		//creates a new game with a new deck.
-		new Display(new Deck(), frame);
+		new Display(new Deck(), frame, chips);
 		
 		background.repaint();
 		
@@ -258,6 +274,9 @@ public class Display implements ActionListener {
 		}
 		if(e.getSource() == newGame) {
 			resetGame();
+		}
+		if(e.getSource() == doubleDown) {
+			doubleDown();
 		}
 		
 	}
