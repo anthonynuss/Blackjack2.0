@@ -28,7 +28,15 @@ public class Display implements ActionListener {
 	private JButton doubleDown;
 	private JButton stand;
 	private JButton newGame;
-
+	
+	//betting buttons/labels
+	private JLabel totalMoney;
+	private JLabel currBet;
+	private JLabel betAmount;
+	private JButton fiveBet;
+	private JButton tenBet;
+	private JButton twentyFiveBet;
+	
 	private Chips chips;
 	private int cardLocation;
 	private int dealerCardLocation;
@@ -64,11 +72,41 @@ public class Display implements ActionListener {
         frame.setVisible(true);
         panel.setLayout(null);
         
+        //adds bet amount option
+        totalMoney = new JLabel("Balance: " +chips.getAmountOfChips());
+        totalMoney.setBounds(300, 500, 150, 20);
+        background.add(totalMoney);
+        
+        currBet = new JLabel("Bet Amount: " +chips.getCurrentBet());
+        currBet.setBounds(300, 520, 150, 20);
+        background.add(currBet);
+ 
+        betAmount = new JLabel("Place your bet:");
+        betAmount.setBounds(300, 560, 150, 20);
+        background.add(betAmount);
+        
+        fiveBet = new JButton("5");
+        fiveBet.setBounds(300, 580, 25, 20);
+        fiveBet.addActionListener(this);
+        background.add(fiveBet);
+        
+        tenBet = new JButton("10");
+        tenBet.setBounds(325, 580, 25, 20);
+        tenBet.addActionListener(this);
+        background.add(tenBet);
+        
+        twentyFiveBet = new JButton("25");
+        twentyFiveBet.setBounds(350, 580, 25, 20);
+        twentyFiveBet.addActionListener(this);
+        background.add(twentyFiveBet);
+        
         //adds the deal button
-        deal = new JButton("Deal");
-        deal.setBounds(620, 5, 40, 40);
-        background.add(deal);
-        deal.addActionListener(this);
+        
+	    deal = new JButton("Deal");
+	    deal.setBounds(620, 5, 40, 40);
+	    
+	    deal.addActionListener(this);
+        
         
         background.repaint();
 	}
@@ -80,7 +118,10 @@ public class Display implements ActionListener {
 	public void deal() {
 		//remove button to deal
 		background.remove(deal);
-		
+		background.remove(betAmount);
+		background.remove(fiveBet);
+		background.remove(tenBet);
+		background.remove(twentyFiveBet);
 		//adds hit button
 		hit = new JButton("Hit"); 
 		hit.setBounds(450, 500, 70, 20);
@@ -233,14 +274,25 @@ public class Display implements ActionListener {
 	 * @return string representation of the result
 	 */
 	public String determineOutcome() {
+		
+		
 		if(playerHand.statusOfHand().equals("BLACKJACK!") || playerHand.getNumberAt() > dealerHand.getNumberAt() && 
 				playerHand.getNumberAt() <= 21 || dealerHand.statusOfHand().equals("BUST!") && playerHand.getNumberAt() <= 21) {
+			chips.betWin();
+			outcomeOfBet();
+			return "YOU WIN!";
+		}else if(playerHand.statusOfHand().equals("BLACKJACK!")) {
+			chips.blackJackWin();
+			outcomeOfBet();
 			return "YOU WIN!";
 		}
 		else if(playerHand.statusOfHand().equals("BUST!") || playerHand.getNumberAt() < dealerHand.getNumberAt() && dealerHand.getNumberAt() <=21) {
+			outcomeOfBet();
 			return "YOU LOSE!";
 		
 		}
+		chips.returnChips();
+		outcomeOfBet();
 		return "PUSH!";
 					
 	}
@@ -259,6 +311,20 @@ public class Display implements ActionListener {
 		
 	}
 	
+	public void outcomeOfBet() {
+		chips.resetBet();
+		totalMoney.setText("Balance: " +chips.getAmountOfChips());
+		currBet.setText("Bet Amount: " +chips.getCurrentBet());
+		background.repaint();
+	}
+	
+	public void betChips(int amount) {
+		background.add(deal);
+		chips.betChips(amount);
+		totalMoney.setText("Balance: " +chips.getAmountOfChips());
+		currBet.setText("Bet Amount: " +chips.getCurrentBet());
+		background.repaint();
+	}
 	/**
 	 * action listener that uses the buttons 
 	 */
@@ -277,6 +343,15 @@ public class Display implements ActionListener {
 		}
 		if(e.getSource() == doubleDown) {
 			doubleDown();
+		}
+		if(e.getSource() == fiveBet) {
+			betChips(5);
+		}
+		if(e.getSource() == tenBet) {
+			betChips(10);
+		}
+		if(e.getSource() == twentyFiveBet) {
+			betChips(25);
 		}
 		
 	}

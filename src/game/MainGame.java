@@ -17,7 +17,11 @@ public class MainGame {
 		
         //New deck
 		Deck deck = new Deck();
-		Display display = new Display(deck, frame);
+		
+		//New Chips
+		Chips chips = new Chips(500);
+		
+		Display display = new Display(deck, frame, chips);
 		
 	}
 }
