@@ -85,18 +85,27 @@ public class Display implements ActionListener {
         betAmount.setBounds(300, 560, 150, 20);
         background.add(betAmount);
         
-        fiveBet = new JButton("5");
-        fiveBet.setBounds(300, 580, 25, 20);
+        fiveBet = new JButton(new ImageIcon("..//BlackJack2.0//resources//bluechip.png"));
+        fiveBet.setBounds(190, 580, 100, 100);
+        fiveBet.setOpaque(false);
+        fiveBet.setContentAreaFilled(false);
+        fiveBet.setBorderPainted(false);
         fiveBet.addActionListener(this);
         background.add(fiveBet);
         
-        tenBet = new JButton("10");
-        tenBet.setBounds(325, 580, 25, 20);
+        tenBet = new JButton(new ImageIcon("..//BlackJack2.0//resources//tenchip.png"));
+        tenBet.setBounds(300, 580, 100, 100);
+        tenBet.setOpaque(false);
+        tenBet.setContentAreaFilled(false);
+        tenBet.setBorderPainted(false);
         tenBet.addActionListener(this);
         background.add(tenBet);
         
-        twentyFiveBet = new JButton("25");
-        twentyFiveBet.setBounds(350, 580, 25, 20);
+        twentyFiveBet = new JButton(new ImageIcon("..//BlackJack2.0//resources//blackchip.png"));
+        twentyFiveBet.setBounds(410, 580, 100, 100);
+        twentyFiveBet.setOpaque(false);
+        twentyFiveBet.setContentAreaFilled(false);
+        twentyFiveBet.setBorderPainted(false);
         twentyFiveBet.addActionListener(this);
         background.add(twentyFiveBet);
         
